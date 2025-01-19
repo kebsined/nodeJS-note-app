@@ -44,8 +44,19 @@ async function removeNoteById(id) {
 	console.log(chalk.inverse.cyanBright('Note was removed successfully'));
 }
 
+async function editNote(id, title) {
+	const notes = await getNotes();
+	notes.forEach((el, index) => {
+		if (el.id === id) notes.splice(index, 1, { title, id });
+	});
+	console.log(chalk.inverse.green(`Note ${id} was updated: ${title}`, notes));
+	await saveNotes(notes);
+}
+
 module.exports = {
 	addNote,
 	printNotes,
 	removeNoteById,
+	getNotes,
+	editNote,
 };
